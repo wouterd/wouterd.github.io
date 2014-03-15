@@ -72,7 +72,7 @@ public class HstResolvedSiteMapItemDecorator implements ResolvedSiteMapItem {
 ### Getting the ContentBean
 The process() method gets passed three things: a ResolvedSiteMapItem, a ServletRequest and a ServletResponse. There are some utility methods that I got from Ard Schrijvers that should Soon(TM) be somewhere in the HST Utils Api that allow you to resolve the content bean for the current request. I had to add these to my custom SiteMapItemHandler for now. I ended up putting these utility methods in their own abstract class and extended that class for my new SiteMapItemHandler. All my class has to do is call the getContentBeanForResolvedSiteMapItem() method that returns a HippoBean to get the content bean for the current request. You can download the abstract class here: [ContentBeanAwareHstSiteMapItemHandler.java][contentbeanhandlersrc]
 
-[contentbeanhandlersrc]: http://dl.dropbox.com/u/32129164/blog-attachments/ContentBeanAwareHstSiteMapItemHandler.java
+[contentbeanhandlersrc]: /attachments/ContentBeanAwareHstSiteMapItemHandler.java
 
 ### Putting It All Together
 Now that everything is in place, we can implement the process() method. My implementation does the following:
