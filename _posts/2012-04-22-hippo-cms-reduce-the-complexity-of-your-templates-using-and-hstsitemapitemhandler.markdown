@@ -3,6 +3,7 @@ layout: post
 title:  "Reduce the Complexity of Your Templates Using an HstSiteMapItemHandler"
 date:   2012-04-22 12:00:31
 categories: hippo cms web
+redirect_from: "/2012/04/changing-your-rendering-based-on.html"
 ---
 
 Often the content in the document that's being rendered on the page helps decide what information ends up on the user's screen. We normally have two ways to handle this: in the java component (HstComponent) or in the render template (JSP / Freemarker). Now this works OK when the structure of the page doesn't change, because it's mostly a matter of changing what is put in the attributes of the request (Java) or writing a &lt;c:if&gt; in your JSP / Freemarker.
