@@ -18,11 +18,8 @@ Below is the HstSiteMapItemHandler interface:
 
 {% highlight java %}
 public interface HstSiteMapItemHandler {
-    void init(ServletContext servletContext, SiteMapItemHandlerConfiguration handlerConfig) 
-        throws HstSiteMapItemHandlerException;
-    ResolvedSiteMapItem process(ResolvedSiteMapItem resolvedSiteMapItem, 
-        HttpServletRequest request, HttpServletResponse response) 
-        throws HstSiteMapItemHandlerException;
+    void init(ServletContext servletContext, SiteMapItemHandlerConfiguration handlerConfig) throws HstSiteMapItemHandlerException;
+    ResolvedSiteMapItem process(ResolvedSiteMapItem resolvedSiteMapItem, HttpServletRequest request, HttpServletResponse response) throws HstSiteMapItemHandlerException;
     SiteMapItemHandlerConfiguration getSiteMapItemHandlerConfiguration();
     ServletContext getServletContext();
     void destroy() throws HstSiteMapItemHandlerException;
@@ -57,15 +54,10 @@ public class HstResolvedSiteMapItemDecorator implements ResolvedSiteMapItem {
     private final ResolvedSiteMapItem delegate;
     private final HstComponentConfiguration hstComponentConfiguration;
     private final String relativeContentPath;
-    public HstResolvedSiteMapItemDecorator(
-            final ResolvedSiteMapItem delegate,
-            final HstComponentConfiguration componentConfiguration) {
+    public HstResolvedSiteMapItemDecorator(final ResolvedSiteMapItem delegate, final HstComponentConfiguration componentConfiguration) {
         this(delegate, componentConfiguration, delegate.getRelativeContentPath());
     }
-    public HstResolvedSiteMapItemDecorator(
-            final ResolvedSiteMapItem delegate,
-            final HstComponentConfiguration componentConfiguration,
-            final String relativeContentPath) {
+    public HstResolvedSiteMapItemDecorator(final ResolvedSiteMapItem delegate, final HstComponentConfiguration componentConfiguration, final String relativeContentPath) {
         this.delegate = delegate;
         this.hstComponentConfiguration = componentConfiguration;
         this.relativeContentPath = relativeContentPath;
@@ -98,10 +90,7 @@ Below is the source of the SiteMapItemHandler:
 public class SubjectHstSiteMapHandler extends ContentBeanAwareHstSiteMapItemHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(SubjectHstSiteMapHandler.class);
     @Override
-    public ResolvedSiteMapItem process(ResolvedSiteMapItem resolvedSiteMapItem,
-                                       HttpServletRequest request,
-                                       HttpServletResponse response)
-            throws HstSiteMapItemHandlerException {
+    public ResolvedSiteMapItem process(ResolvedSiteMapItem resolvedSiteMapItem, HttpServletRequest request, HttpServletResponse response) throws HstSiteMapItemHandlerException {
         HippoBean contentBean = getContentBeanForResolvedSiteMapItem(resolvedSiteMapItem);
         if (contentBean == null) {
             LOGGER.info("No content bean found, reverting to initial site map item.");
