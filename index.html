@@ -9,8 +9,6 @@ date: 2014-03-15 12:00
     <section class="post">
         <header class="post-header">
             <h2 class="post-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
-            
-            <div class="post-description">{{ page.summary }}</div>
             {% if page.categories.size >= 1 %}
             <p class="post-meta">
                 Under
@@ -19,6 +17,7 @@ date: 2014-03-15 12:00
                 {% endfor %}
             </p>
             {% endif %}
+            <div class="post-description">{{ page.summary }}</div>
         </header>
     </section>
 </div>
