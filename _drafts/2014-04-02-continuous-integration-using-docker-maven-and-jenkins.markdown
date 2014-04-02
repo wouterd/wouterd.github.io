@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Using Docker, Maven and Jenkins for Continuous Integration"
+title:  "Continuous Integration Using Docker, Maven and Jenkins"
 date:   2014-04-02
 categories:
   - continuous integration
@@ -26,7 +26,22 @@ integration tests for the integration branch. The problem with the last option i
 Sounds like bad design to me.
 
 ### Docker
+[Docker][docker] is a tool allows you to run multiple processes in their own containers on a machine without the
+overhead of virtual machines. It does give process separation and to the processes it looks like they're running in
+their own linux environment. Docker was created in Ruby and is basically an interface to [Linux Containers][lxc] (LXC),
+a feature of the linux kernel that was introduced in the 3.8 release.
+
+Docker works well under Ubuntu and [Red Hat is working to make it enterprise ready for RHEL][docker-rhel].
+
+Docker allows you to specify containers using [Dockerfiles][docker-builder]. These can be compared to Vagrantfiles that
+are used to provision virtual machines.
+
+
 
 
 
 [travis]:https://travis-ci.org/
+[docker]:https://www.docker.io/
+[lxc]:https://linuxcontainers.org/
+[docker-rhel]:http://www.infoworld.com/t/application-virtualization/red-hat-fast-tracks-docker-apps-enterprise-linux-238122
+[docker-builder]:http://docs.docker.io/en/latest/reference/builder/
