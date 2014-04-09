@@ -78,8 +78,34 @@ The wouterd/tomcat image is built as follows:
     CMD export JAVA_HOME=/usr/lib/jvm/java-7-oracle && export CATALINA_BASE=/var/lib/tomcat6 && /usr/share/tomcat6/bin/catalina.sh run
     EXPOSE 8080
     
-The wouterd/oracle-jre7 has some magic to install jdk 7 from oracle on a clean ubuntu VM. You can check out the code in
-the Github project if you're interested. 
+The wouterd/oracle-jre7 has some magic to install jdk 7 from oracle on a clean ubuntu VM. The code for this container and the two above
+is in the docker-images directory in the Github project. The wouterd/tomcat image does the following:
+
+* `FROM wouterd/oracle-jre7` takes the container wouterd/oracle-jre7 (a container with ubunty + oracle java7 installed)
+* `RUN apt-get install -y tomcat6` installs tomcat6 using the ubuntu repository
+* `RUN mkdir -p ..` creates the temp and logs directories
+* `CMD [some bash]` sets the command that gets executed when this container is run, setting two environment variables and starting catalina.sh
+* `EXPOSE 8080` tells docker to expose port 8080 in the container to the host system.
+
+The docker container that gets built during the integration test simply does two things:
+
+* Takes the wouterd/tomcat container 
+* `ADD [file] [destination]` copies the tar.gz with the distribution from the maven project to the tomcat base folder and extracts it if it's a tar.
+* It inherits the `CMD` directive from the wouterd/tomcat container, so if you "run" the integration container using `docker run`, it will start up 
+tomcat and start deploying the distribution.
+
+### Using the container to run continuous integration
+Now that we have everything in place to build the integration server, we can start putting everything together. I will use Jenkins as the build server,
+but this solution is easily ported to your own build server, like Go, Hudson or Bamboo. I implemented these steps on the Jenkins server:
+
+* Build the project using maven and run tests using `mvn clean test`
+* Build the project distribution using `mvn clean package -Pdist`
+* Build the docker container with the distribution
+* Start the docker container
+* Run integration tests on the container
+* Stop & destroy the container and delete the created image
+
+
 
 [travis]:https://travis-ci.org/
 [docker]:https://www.docker.io/
