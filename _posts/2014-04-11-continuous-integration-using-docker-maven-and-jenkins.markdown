@@ -7,6 +7,7 @@ categories:
   - docker
   - jenkins
   - java
+  - hippo
 summary: "With the push to feature branches and the increased use of git, continuous integration of every single branch
           can become an infrastructure nightmare. Docker can be used to eliminate the need to deploy to remote servers
           and run your integration tests on the same server as your build. Scaling can then be done using Jenkins slaves
