@@ -237,7 +237,7 @@ echo -n "done"
 if [[ ${boot2docker} ]] ; then
     # This Go template will break if we end up exposing more than one port, but by then this should be ported to Java
     # code already (famous last words...)
-    tomcat_port=$(docker inspect --format '{{ range .NetworkSettings.Ports }}{{ range . }}{{ .HostPort }}{{end}}{{end}}' ${container_id}) 
+    tomcat_port=$(docker inspect --format '{{ range .NetworkSettings.Ports }}{{ range . }}{{ .HostPort }}{{end}}{{end}}' ${container_id})
     tomcat_host_port="${BOOT_2_DOCKER_HOST_IP}:${tomcat_port}"
 else
     tomcat_host_port="${container_ip}:8080"
@@ -248,7 +248,7 @@ echo ${tomcat_host_port} > ${work_dir}/docker_container.ip
 {% endhighlight %}  
 
 The script has some magic to resolve the port when it comes to running docker remotely, but it's mostly just running a
-bunch of docker commands to build an image and start a container. I use a little bit of docker magic to monitor the log
+bunch of docker commands to build an image and start a container. I use some docker magic to monitor the log
 files on the tomcat container. With the VOLUME directive in the tomcat container, I specified that the /var/log/tomcat6
 folder is exposed as a volume. I can see this folder from other containers if I specify the running tomcat container with
 the --volumes-from command. The following command executes grep in a small container to see if the server has already
