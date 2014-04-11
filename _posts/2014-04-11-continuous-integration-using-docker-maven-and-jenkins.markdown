@@ -323,7 +323,7 @@ The `integration-test` phase is implemented using selenium webdriver tests with 
 
 * [Travis-ci][travis], a continuous integration service for your public github projects
 * [Docker][docker], an implementation for managing linux containers
-* [Docker-cli][docker-cli], a way to run docker on a Windows or MacOS host using a very minimal memory footprint
+* [Boot2Docker-cli][boot2docker-cli], a way to run docker on a Windows or MacOS host using a very minimal memory footprint
 * [Vagrant][vagrant], a tool to specify and create VirtualBox VMs
 * [Hippo-docker][hippo-docker], my reference Hippo project using docker to do integration testing
 * [Phantomjs][phantomjs], A headless WebKit based and scriptable browser that is very useful for headless selenium testing
