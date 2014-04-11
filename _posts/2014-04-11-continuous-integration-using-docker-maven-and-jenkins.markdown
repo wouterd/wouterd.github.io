@@ -186,6 +186,7 @@ The `pre-integration-test` and `post-integration-test` phases are implemented us
   of 10 lines of java code. :-)
 
 {% highlight bash %}
+{% raw %}
 #!/bin/bash
 
 if [[ ${BOOT_2_DOCKER_HOST_IP} ]] ; then
@@ -235,13 +236,14 @@ echo -n "done"
 if [[ ${boot2docker} ]] ; then
     # This Go template will break if we end up exposing more than one port, but by then this should be ported to Java
     # code already (famous last words...)
-    tomcat_port=$(docker inspect --format '{{ range .NetworkSettings.Ports }}{{ range . }}{{ .HostPort }}{{end}}{{end}}' ${container_id})
+    tomcat_port=$(docker inspect --format '{{ range .NetworkSettings.Ports }}{{ range . }}{{ .HostPort }}{{end}}{{end}}' ${container_id}) 
     tomcat_host_port="${BOOT_2_DOCKER_HOST_IP}:${tomcat_port}"
 else
     tomcat_host_port="${container_ip}:8080"
 fi
 
 echo ${tomcat_host_port} > ${work_dir}/docker_container.ip
+{% endraw %}
 {% endhighlight %}  
 
 The script has some magic to resolve the port when it comes to running docker remotely, but it's mostly just running a
