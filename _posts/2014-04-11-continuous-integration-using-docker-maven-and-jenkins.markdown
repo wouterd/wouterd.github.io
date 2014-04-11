@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Continuous Integration Using Docker, Maven and Jenkins"
-date:   2014-04-02
+date:   2014-04-11
 categories:
   - continuous integration
   - docker
@@ -70,20 +70,21 @@ environments. The Dockerfile for the integration image resides in the root of th
 
 The wouterd/tomcat image is built as follows:
 
-    FROM wouterd/oracle-jre7
-    MAINTAINER Wouter Danes "https://github.com/wouterd"
-    RUN apt-get install -y tomcat6
-    RUN mkdir -p /usr/share/tomcat6/logs
-    RUN mkdir -p /usr/share/tomcat6/temp
-    CMD export JAVA_HOME=/usr/lib/jvm/java-7-oracle && export CATALINA_BASE=/var/lib/tomcat6 && /usr/share/tomcat6/bin/catalina.sh run
-    EXPOSE 8080
+    FROM        wouterd/oracle-jre7
+    VOLUME      ["/var/log/tomcat6"]
+    MAINTAINER  Wouter Danes "https://github.com/wouterd"
+    RUN         apt-get install -y tomcat6
+    CMD         JAVA_HOME=/usr/lib/jvm/java-7-oracle CATALINA_BASE=/var/lib/tomcat6 CATALINA_HOME=/usr/share/tomcat6 /usr/share/tomcat6/bin/catalina.sh run
+    EXPOSE      8080
 
 The wouterd/oracle-jre7 has some magic to install jdk 7 from oracle on a clean ubuntu VM. The code for this container
 and the two above is in the docker-images directory in the Github project. The wouterd/tomcat image does the following:
 
-* `FROM wouterd/oracle-jre7` takes the container wouterd/oracle-jre7 (a container with ubunty + oracle java7 installed)
+* `FROM wouterd/oracle-jre7` takes the container wouterd/oracle-jre7 (a container with Ubuntu + oracle java7 installed)
+* `VOLUME ["/var/log/tomcat6"]` tells the container to expose that path to the outside world. Docker actually
+  "physically" places this path outside the container so that other containers can also reach it. Further down I will
+  show why this is great. (Sneak peak: syslog deprecated?)
 * `RUN apt-get install -y tomcat6` installs tomcat6 using the ubuntu repository
-* `RUN mkdir -p ..` creates the temp and logs directories
 * `CMD [some bash]` sets the command that gets executed when this container is run, setting two environment variables
   and starting catalina.sh
 * `EXPOSE 8080` tells docker to expose port 8080 in the container to the host system.
@@ -100,16 +101,68 @@ The docker container that gets built during the integration test simply does two
 Now that we have everything in place to build the integration server, we can start putting it all together. I will
 use Jenkins as the build server, but this solution is easily ported to your own build server, like Go, Hudson or Bamboo.
 The integrationtest can also be run using `mvn verify`, if you run linux as an OS with a minimum kernel version 3.8 or
-MacOS X with boot2docker and public-key-authentication setup for `boot2docker ssh`. Refer to the __Project Requirements__
-section below for the required steps and software to be able to run `mvn verify` on your own machine.
+MacOS X with boot2docker-cli. Refer to the __Project Requirements__ section below for the required steps and software to
+be able to run `mvn verify` on your own machine.
 
-__OS X Only__: Here's a two liner to add your key
-to the boot2docker vm (if you use an rsa key, mine is called id_dsa.pub):
+#### Running tests with boot2docker
+To be able to run the integration-tests with boot2docker, you need to
+specify -Dboot2docker=[IP_of_boot2docker-vm] on the commandline, like this: `mvn verify -Dboot2docker=192.168.59.103`.
+Below you can see how to figure out the IP of your boot2docker VM, the IP you need to specify is the IP of the eth1
+interface:
 
-{% highlight bash %}
-  boot2docker ssh mkdir -p ~/.ssh
-  cat ~/.ssh/id_rsa.pub | boot2docker ssh 'cat >> ~/.ssh/authorized_keys'
-{% endhighlight %}
+    Wouters-MacBook-Pro-2:hippo-docker wouter$ boot2docker-cli ssh
+    Warning: Permanently added '[localhost]:2022' (RSA) to the list of known hosts.
+    docker@localhost's password:
+                            ##        .
+                      ## ## ##       ==
+                   ## ## ## ##      ===
+               /""""""""""""""""\___/ ===
+          ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+               \______ o          __/
+                 \    \        __/
+                  \____\______/
+     _                 _   ____     _            _
+    | |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __
+    | '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|
+    | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
+    |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
+    boot2docker: 0.8.0
+    docker@boot2docker:~$ ifconfig
+    docker0   Link encap:Ethernet  HWaddr 56:84:7A:FE:97:99  
+              inet addr:172.17.42.1  Bcast:0.0.0.0  Mask:255.255.0.0
+              inet6 addr: fe80::5484:7aff:fefe:9799/64 Scope:Link
+              UP BROADCAST MULTICAST  MTU:1500  Metric:1
+              RX packets:71349 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:119482 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:0
+              RX bytes:3000501 (2.8 MiB)  TX bytes:169514559 (161.6 MiB)
+
+    eth0      Link encap:Ethernet  HWaddr 08:00:27:F6:4F:CB  
+              inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+              inet6 addr: fe80::a00:27ff:fef6:4fcb/64 Scope:Link
+              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+              RX packets:415492 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:125189 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:1000
+              RX bytes:603256397 (575.3 MiB)  TX bytes:7233415 (6.8 MiB)
+
+    eth1      Link encap:Ethernet  HWaddr 08:00:27:35:F0:76  
+              inet addr:192.168.59.103  Bcast:192.168.59.255  Mask:255.255.255.0
+              inet6 addr: fe80::a00:27ff:fe35:f076/64 Scope:Link
+              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+              RX packets:591 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:83 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:1000
+              RX bytes:94986 (92.7 KiB)  TX bytes:118562 (115.7 KiB)
+
+    lo        Link encap:Local Loopback  
+              inet addr:127.0.0.1  Mask:255.0.0.0
+              inet6 addr: ::1/128 Scope:Host
+              UP LOOPBACK RUNNING  MTU:65536  Metric:1
+              RX packets:40 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:40 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:0
+              RX bytes:8930 (8.7 KiB)  TX bytes:8930 (8.7 KiB)
 
 You can create the Jenkins server using [Vagrant][vagrant] by running `vagrant up` in the root of the project. After
 initialization and booting, jenkins can be found by opening a browser and going to [http://localhost:8080](http://localhost:8080).
@@ -134,37 +187,71 @@ The `pre-integration-test` and `post-integration-test` phases are implemented us
 
 {% highlight bash %}
 #!/bin/bash
-set -eu
-workdir="${WORK_DIR}"
-dockerfile="${DOCKER_FILE_LOCATION}"
-distributionfile="${DISTRIBUTION_FILE_LOCATION}"
-logs="${workdir}/logs"
-dockerbuilddir="${workdir}/docker-build"
-mkdir -p ${workdir}
-mkdir -p ${dockerbuilddir}
-cp ${dockerfile} ${distributionfile} ${dockerbuilddir}/
-image_id=$(docker build --rm -q=false ${dockerbuilddir} | grep "Successfully built" | cut -d " " -f 3)
-echo ${image_id} > ${workdir}/docker_image.id
-rm -rf ${dockerbuilddir}
-catalina_out="catalina.$(date +%Y-%m-%d).log"
-if [[ "$(uname)" == "Darwin" ]] ; then
-    echo 'Detected MacOS X, trying to use boot2docker ssh to check catalina logs..'
-    logs='/tmp/docker-logs'
-    grepcommand="boot2docker ssh grep -q 'INFO: Server startup' ${logs}/${catalina_out}"
+
+if [[ ${BOOT_2_DOCKER_HOST_IP} ]] ; then
+    echo "Boot2Docker specified, this will work if you use the new boot2docker-cli VM.."
+    boot2docker='yes'
+    docker_run_args='-p 8080'
 else
-    mkdir -p ${logs}
-    grepcommand="grep -q 'INFO: Server startup' ${logs}/${catalina_out}"
+    boot2docker=''
+    docker_run_args=''
 fi
-container_id=$(docker run -d -v ${logs}:/var/log/tomcat6 ${image_id})
-echo ${container_id} > ${workdir}/docker_container.id
+
+set -eu
+
+work_dir="${WORK_DIR}"
+docker_file="${DOCKER_FILE_LOCATION}"
+distribution_file="${DISTRIBUTION_FILE_LOCATION}"
+docker_build_dir="${work_dir}/docker-build"
+
+mkdir -p ${work_dir}
+
+mkdir -p ${docker_build_dir}
+
+cp ${docker_file} ${distribution_file} ${docker_build_dir}/
+
+image_id=$(docker build --rm -q=false ${docker_build_dir} | grep "Successfully built" | cut -d " " -f 3)
+echo ${image_id} > ${work_dir}/docker_image.id
+
+rm -rf ${docker_build_dir}
+
+catalina_out="/var/log/tomcat6/catalina.$(date +%Y-%m-%d).log"
+
+container_id=$(docker run ${docker_run_args} -d ${image_id})
+echo ${container_id} > ${work_dir}/docker_container.id
+
+container_ip=$(docker inspect --format '{{.NetworkSettings.IPAddress}}' ${container_id})
+
 echo -n "Waiting for tomcat to finish startup..."
+
 # Give Tomcat some time to wake up...
-while ! ${grepcommand} ; do
+while ! docker run --rm --volumes-from ${container_id} busybox grep -i -q 'INFO: Server startup in' ${catalina_out} ; do
     sleep 5
     echo -n "."
 done
+
 echo -n "done"
+
+if [[ ${boot2docker} ]] ; then
+    # This Go template will break if we end up exposing more than one port, but by then this should be ported to Java
+    # code already (famous last words...)
+    tomcat_port=$(docker inspect --format '{{ range .NetworkSettings.Ports }}{{ range . }}{{ .HostPort }}{{end}}{{end}}' ${container_id})
+    tomcat_host_port="${BOOT_2_DOCKER_HOST_IP}:${tomcat_port}"
+else
+    tomcat_host_port="${container_ip}:8080"
+fi
+
+echo ${tomcat_host_port} > ${work_dir}/docker_container.ip
 {% endhighlight %}  
+
+The script has some magic to resolve the port when it comes to running docker remotely, but it's mostly just running a
+bunch of docker commands to build an image and start a container. I use a little bit of docker magic to monitor the log
+files on the tomcat container. With the VOLUME directive in the tomcat container, I specified that the /var/log/tomcat6
+folder is exposed as a volume. I can see this folder from other containers if I specify the running tomcat container with
+the --volumes-from command. The following command executes grep in a small container to see if the server has already
+started: `docker run --rm --volumes-from ${container_id} busybox grep -i -q 'INFO: Server startup in' ${catalina_out}`
+The `--rm` option tells docker to throw away the container immediately after it exits, which is nice, because we're
+repeating this quite a lot before the server has started up.
 
 This script is run with the following snippet in the integrationtests pom:
 {% highlight xml %}
@@ -192,11 +279,6 @@ This script is run with the following snippet in the integrationtests pom:
 </plugin>
 {% endhighlight %}
 
-The `if [[ "$(uname)" == "Darwin" ]]` hack is there to be able to run this script with boot2docker and detect if tomcat
-has started up yet. It's not easily possible to bind host folders to docker container folders when using boot2docker, but
-there is definitely room for improvement there. For Cygwin a similar hack will be needed. :( Using docker-java would fix
-this, because they have a better way to stream logs than the docker CLI.
-
 The `package` goal uses the maven-assembly-plugin to create the tar.gz archive that needs to be unpacked into the
   CATALINA_HOME folder on the tomcat docker container.
 
@@ -206,13 +288,17 @@ The `integration-test` phase is implemented using selenium webdriver tests with 
 
 ### Project requirements
 
-* Docker installed and a daemon running, either on the host machine or in a boot2docker VM, OS X and linux will work,
-  Windows might work when using cygwin. If you are running boot2docker make sure you have the DOCKER_HOST environment
-  variable set. Here's a oneliner that'll work with standard settings: `export DOCKER_HOST=tcp://localhost:4243`
+* Docker installed and a daemon running, either on the host machine or in a [boot2docker-cli][boot2docker-cli] VM, OS X
+  and linux will work, Windows will not work until it gets a docker CLI or I migrate all bash scripts to java code. If
+  you are running boot2docker make sure you have the DOCKER_HOST environment variable set. Here's a oneliner that'll
+  work with standard settings: `export DOCKER_HOST=tcp://localhost:4243`. Also, you need to figure out the IP of your
+  boot2docker-vm on the host-only network. (eth1, by default the IP is `192.168.59.103`)
 * PhantomJS needs to be installed and on the path
 * Git isn't required but it useful to be able to get the project. ;-)
 * Maven 3.x
 * Java 7+ (Oracle JDK preferred)
+* You need to run ./build-docker-images.sh once to build the oracle jdk7 and tomcat images before you can run the
+  integration tests.
 
 ### What is Next?
 
@@ -230,23 +316,28 @@ The `integration-test` phase is implemented using selenium webdriver tests with 
   when you have to initialize the container over and over again. What you can do is wait for tomcat to start up and deploy
   and then run `docker commit`. It will create a new docker image that you can start which will then move on from when
   you called `docker commit`. This is a very nice feature to speed up autonomous integration tests.
-
-Let me know if you have any questions or if anything is unclear. Or if you know better ways to do things I did in this
-project!
+* At the moment, this project can't run on Windows, because it relies on the docker CLI, I should migrate the scripts
+  to the [docker client java api][docker-java], so it can run seamless on Windows hosts as well (with boot2docker-cli).
 
 ### Useful links
 
 * [Travis-ci][travis], a continuous integration service for your public github projects
 * [Docker][docker], an implementation for managing linux containers
+* [Docker-cli][docker-cli], a way to run docker on a Windows or MacOS host using a very minimal memory footprint
 * [Vagrant][vagrant], a tool to specify and create VirtualBox VMs
 * [Hippo-docker][hippo-docker], my reference Hippo project using docker to do integration testing
 * [Phantomjs][phantomjs], A headless WebKit based and scriptable browser that is very useful for headless selenium testing
 * [Selenium Webdriver][webdriver], If you want to create regression and integration tests that can be run during your build
 
+Please leave a comment in the comments section below, let me know if you have any questions or if anything is unclear.
+Or if you know better ways to do things I did in this project! Or even better: to share how you used this in your
+projects!
+
 [travis]:https://travis-ci.org/
 [lxc]:https://linuxcontainers.org/
 
 [docker]:https://www.docker.io/
+[boot2docker-cli]:https://github.com/boot2docker/boot2docker-cli
 [docker-rhel]:http://www.infoworld.com/t/application-virtualization/red-hat-fast-tracks-docker-apps-enterprise-linux-238122
 [docker-builder]:http://docs.docker.io/en/latest/reference/builder/
 [docker-java]:https://github.com/kpelykh/docker-java
