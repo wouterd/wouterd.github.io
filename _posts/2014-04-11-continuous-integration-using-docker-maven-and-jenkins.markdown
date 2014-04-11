@@ -65,9 +65,10 @@ project using docker. If you have [Vagrant][vagrant], you can see the Jenkins se
 jdk 7 image that is used as the base of a tomcat image. I then use that tomcat image as the base for my integration
 environments. The Dockerfile for the integration image resides in the root of the project and is as follows:
 
-    FROM wouterd/tomcat
-    MAINTAINER Wouter Danes "https://github.com/wouterd"
-    ADD myhippoproject/target/myhippoproject-distribution.tar.gz /var/lib/tomcat6/
+FROM wouterd/tomcat
+MAINTAINER Wouter Danes "https://github.com/wouterd"
+ADD myhippoproject.tar.gz /tmp/app-distribution/
+RUN for i in $(ls /tmp/app-distribution/) ; do mkdir -p /var/lib/tomcat6/${i} && cp -f /tmp/app-distribution/${i}/* /var/lib/tomcat6/${i}/ ; done
 
 The wouterd/tomcat image is built as follows:
 
@@ -93,8 +94,11 @@ and the two above is in the docker-images directory in the Github project. The w
 The docker container that gets built during the integration test simply does two things:
 
 * Takes the wouterd/tomcat container
-* `ADD [file] [destination]` copies the tar.gz with the distribution from the maven project to the tomcat base folder
+* `ADD [file] [destination]` copies the tar.gz with the distribution from the maven project to a temporary folder
   and extracts it if it's a tar.
+* The `RUN` line is a convoluted way to copy the contents of the tar over the TOMCAT_HOME directory, for some reason
+  simply adding the tar to the TOMCAT_HOME folder didn't let it extract properly. It would probably work if TOMCAT_HOME
+  was just empty.
 * It inherits the `CMD` directive from the wouterd/tomcat container, so if you "run" the integration container using
   `docker run`, it will start up tomcat and start deploying the distribution.
 
