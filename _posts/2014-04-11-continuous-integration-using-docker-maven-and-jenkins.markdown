@@ -65,10 +65,10 @@ project using docker. If you have [Vagrant][vagrant], you can see the Jenkins se
 jdk 7 image that is used as the base of a tomcat image. I then use that tomcat image as the base for my integration
 environments. The Dockerfile for the integration image resides in the root of the project and is as follows:
 
-FROM wouterd/tomcat
-MAINTAINER Wouter Danes "https://github.com/wouterd"
-ADD myhippoproject.tar.gz /tmp/app-distribution/
-RUN for i in $(ls /tmp/app-distribution/) ; do mkdir -p /var/lib/tomcat6/${i} && cp -f /tmp/app-distribution/${i}/* /var/lib/tomcat6/${i}/ ; done
+    FROM wouterd/tomcat
+    MAINTAINER Wouter Danes "https://github.com/wouterd"
+    ADD myhippoproject.tar.gz /tmp/app-distribution/
+    RUN for i in $(ls /tmp/app-distribution/) ; do mkdir -p /var/lib/tomcat6/${i} && cp -f /tmp/app-distribution/${i}/* /var/lib/tomcat6/${i}/ ; done
 
 The wouterd/tomcat image is built as follows:
 
