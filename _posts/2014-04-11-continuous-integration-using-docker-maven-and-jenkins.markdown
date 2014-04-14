@@ -49,7 +49,7 @@ done a lot, it does add a lot of complexity and "boilerplate" to a simple goal: 
 ### Docker
 [Docker][docker] is a tool allows you to run multiple processes in their own containers on a machine without the
 overhead of virtual machines. It does give process separation and to the processes it looks like they're running in
-their own linux environment. Docker was created in Ruby and is basically an interface to [Linux Containers][lxc] (LXC),
+their own linux environment. Docker was created in Go and is basically an interface to [Linux Containers][lxc] (LXC),
 a feature of the linux kernel that was introduced in the 3.8 release.
 
 Docker works well under Ubuntu and [Red Hat is working to make it enterprise ready for RHEL][docker-rhel].
