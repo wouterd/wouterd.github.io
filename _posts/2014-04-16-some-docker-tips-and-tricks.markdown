@@ -6,7 +6,8 @@ categories:
  - docker
  - infra
 summary: "Docker is a great tool, which can be daunting at first. Shells can be annoying to work with and have their
-  gotchas. This post has some quick tips, tricks and shell one liners to help you use Docker"
+  gotchas. It took me some time to figure these out and I want to spare you the time. This post has some quick tips,
+  tricks and shell one liners to help you use Docker."
 ---
 ### Removing All Containers and Images (Spring Cleaning)
 Spring cleaning one liner:
@@ -23,6 +24,13 @@ If you only want to quickly run a command in a container and exit and aren't wor
 to the docker `run` command, this will really end up saving you a lot of containers to clean up!
 
 Example: `docker run --rm -i -t busybox /bin/bash`
+
+### Commands Don't Run in a Shell
+If you docker run something, for example `docker run --rm busybox ls '/var/log/*''`, it will fail. Why this fails took me
+a while to figure out. The gotcha here is: you don't have a shell, the * is shell expansion and so you need a shell to
+be able to use that. The proper way to do this is:
+
+    docker run --rm busybox sh -c 'ls /var/log/*'
 
 ### Boot2Docker and Laptops on the Move Means DNS Woes
 I have about three locations where I use my laptop and they're all on different ISPs. [Boot2docker][boot2docker-cli]
