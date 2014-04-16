@@ -26,9 +26,9 @@ to the docker `run` command, this will really end up saving you a lot of contain
 Example: `docker run --rm -i -t busybox /bin/bash`
 
 ### Commands Don't Run in a Shell
-If you docker run something, for example `docker run --rm busybox ls '/var/log/*''`, it will fail. Why this fails took me
-a while to figure out. The gotcha here is: you don't have a shell, the * is shell expansion and so you need a shell to
-be able to use that. The proper way to do this is:
+If you `docker run` something that needs shell expansion, for example `docker run --rm busybox ls '/var/log/*'`, it
+will fail. Why this fails took me a while to figure out. The gotcha here is: you don't have a shell, the * is shell
+expansion and so you need a shell to be able to use that. The proper way to do this is:
 
     docker run --rm busybox sh -c 'ls /var/log/*'
 
