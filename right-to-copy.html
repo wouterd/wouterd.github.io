@@ -1,0 +1,37 @@
+---
+layout: default
+title:  "Right to Copy"
+categories:
+ - license
+ - copyright
+summary: "Knowledge should be free and as such you have the right to copy anything on this site as you see fit. Ofcourse
+  I appreciate comments and a reference, but there is no restrictive copy right on anything on this site."
+---
+<div class="posts">
+    <section class="post">
+        <header class="post-header">
+            <h2 class="post-title">{{ page.title }}</h2>
+            {% if page.categories.size >= 1 %}
+            <p class="post-meta">
+                Under
+                {% for category in page.categories %}
+                    <a class="post-category post-category-{{ category }}">{{ category }}</a>
+                {% endfor %}
+            </p>
+            {% endif %}
+        </header>
+        <div>
+          <p>
+            A friend of mine, Laurens Waling, works at a consultancy firm called <a href="http://www.alares.nl/">Alares</a>.
+            He told me about this thing they introduced in their company called "right to copy" which basically means that
+            anything they do, they will share on the web and everyone can use it, remix it as they see fit for free. I think
+            this is a great way to share knowledge and he made me decide to make everything on this site "right to copy".
+          </p>
+          <p>
+            If you happen to use anything on this site, I would appreciate a comment or reference, but it not neccesary.
+          </p>
+          <p><i>You are free to copy, share on social media, remix or otherwise reuse the content on this site as you see fit.
+          You don't require my consent and I don't need to be informed of you using my content.</i></p>
+        </div>
+    </section>
+</div>
