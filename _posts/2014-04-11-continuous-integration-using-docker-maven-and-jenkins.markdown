@@ -96,8 +96,8 @@ The docker container that gets built during the integration test simply does two
 * Takes the wouterd/tomcat container
 * `ADD [file] [destination]` copies the tar.gz with the distribution from the maven project to a temporary folder
   and extracts it if it's a tar.
-* The `RUN` line is a convoluted way to copy the contents of the tar over the TOMCAT_HOME directory, for some reason
-  simply adding the tar to the TOMCAT_HOME folder didn't let it extract properly. It would probably work if TOMCAT_HOME
+* The `RUN` line is a convoluted way to copy the contents of the tar over the `TOMCAT_HOME` directory, for some reason
+  simply adding the tar to the `TOMCAT_HOME` folder didn't let it extract properly. It would probably work if `TOMCAT_HOME`
   was just empty.
 * It inherits the `CMD` directive from the wouterd/tomcat container, so if you "run" the integration container using
   `docker run`, it will start up tomcat and start deploying the distribution.
@@ -111,7 +111,7 @@ be able to run `mvn verify` on your own machine.
 
 #### Running tests with boot2docker
 To be able to run the integration-tests with boot2docker, you need to
-specify -Dboot2docker=[IP_of_boot2docker-vm] on the commandline, like this: `mvn verify -Dboot2docker=192.168.59.103`.
+specify `-Dboot2docker=[IP-of-boot2docker-vm]` on the commandline, like this: `mvn verify -Dboot2docker=192.168.59.103`.
 Below you can see how to figure out the IP of your boot2docker VM, the IP you need to specify is the IP of the eth1
 interface:
 
@@ -287,7 +287,7 @@ This script is run with the following snippet in the integrationtests pom:
 {% endhighlight %}
 
 The `package` goal uses the maven-assembly-plugin to create the tar.gz archive that needs to be unpacked into the
-  CATALINA_HOME folder on the tomcat docker container.
+  `CATALINA_HOME` folder on the tomcat docker container.
 
 The `integration-test` phase is implemented using selenium webdriver tests with the phantomjs driver. But you can use
   any test-fixture here for integration tests that you'd like. An example would be using a generated apache CXF REST
