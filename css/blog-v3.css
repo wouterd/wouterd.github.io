@@ -80,16 +80,19 @@ a:focus {
 }
 
 .content {
+    font-family: "Fira Sans";
+    font-weight: lighter;
     padding: 2em 3em 0;
 }
 
 .post {
-    padding-bottom: 2em;
+  padding-bottom: 2em;
 }
 .post h3 {
   font-size: 1.5em;
 }
 .post-title {
+    font-family: "Fira Sans";
     font-size: 2em;
     color: #222;
     margin-bottom: 0.2em;
@@ -100,11 +103,13 @@ a:focus {
     margin-left: 1em;
 }
 .post-description {
-    font-family: Georgia, "Cambria", serif;
+    font-family: "Fira Sans";
+    font-weight: lighter;
     color: #444;
     line-height: 1.8em;
 }
 .post-meta {
+    font-family: "Fira Sans";
     color: #999;
     font-size: 90%;
     margin: 0;
@@ -189,12 +194,14 @@ a:focus {
 
 /* standard */
 .post pre {
+  font-family: "Fira Mono";
   border: 1px solid #ddd;
   background-color: #eef;
   padding: 0 .4em;
 }
 
 .post code {
+  font-family: "Fira Mono";
   border: 1px solid #ddd;
   background-color: #eef;
   padding: 0 .2em;
@@ -202,6 +209,7 @@ a:focus {
 }
 
 .post pre code {
+  font-family: "Fira Mono";
   border: none;
 }
 

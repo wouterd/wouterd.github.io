@@ -9,14 +9,6 @@ date: 2014-03-15 12:00
     <section class="post">
         <header class="post-header">
             <h2 class="post-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
-            {% if page.categories.size >= 1 %}
-            <p class="post-meta">
-                Under
-                {% for category in page.categories %}
-                    <a class="post-category post-category-{{ category }}">{{ category }}</a>
-                {% endfor %}
-            </p>
-            {% endif %}
             <div class="post-description"><p>{{ page.summary }}<a href="{{ page.url }}"> <i>Read more..</i></a></p></div>
         </header>
     </section>
