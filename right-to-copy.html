@@ -11,14 +11,6 @@ summary: "Knowledge should be free and as such you have the right to copy anythi
     <section class="post">
         <header class="post-header">
             <h2 class="post-title">{{ page.title }}</h2>
-            {% if page.categories.size >= 1 %}
-            <p class="post-meta">
-                Under
-                {% for category in page.categories %}
-                    <a class="post-category post-category-{{ category }}">{{ category }}</a>
-                {% endfor %}
-            </p>
-            {% endif %}
         </header>
         <div>
           <p>
