@@ -94,12 +94,14 @@ a:focus {
 }
 .post h3 {
   font-size: 1.5em;
+  font-weight: normal;
 }
 .post-title {
     font-family: "Fira Sans";
     font-size: 2em;
     color: #222;
     margin-bottom: 0.2em;
+    font-weight: normal;
 }
 .post-avatar {
     border-radius: 50px;
