@@ -167,6 +167,10 @@ a:focus {
     background: none;
 }
 
+ins.adsbygoogle {
+  margin-top: 2em;
+}
+
 @media (max-width: 767px) {
     .sidebar {
         width: 100%;
