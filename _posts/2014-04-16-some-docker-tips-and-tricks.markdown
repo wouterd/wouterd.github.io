@@ -9,15 +9,16 @@ summary: "Docker is a great tool, which can be daunting at first. Shells can be 
   gotchas. It took me some time to figure these out and I want to spare you the time. This post has some quick tips,
   tricks and shell one liners to help you use Docker."
 ---
+
 ### Removing All Containers and Images (Spring Cleaning)
 Spring cleaning one liner:
 
-    {% raw %} docker kill $(docker ps -q) ; docker rm $(docker ps -a -q) ; docker rmi $(docker images -q -a) {% endraw %}
+    {% raw %} docker rm -f $(docker ps -a -q) ; docker rmi $(docker images -q -a) {% endraw %}
 
 This might give a warning when there are no running containers or containers at all, but it's a nice one liner when
 you're trying things out. If you just want to remove all containers, you can run:
 
-    {% raw %} docker kill $(docker ps -q) ; docker rm $(docker ps -a -q) {% endraw %}
+    {% raw %} docker rm -f $(docker ps -a -q) {% endraw %}
 
 ### Remove Containers On Exit
 If you only want to quickly run a command in a container and exit and aren't worried about the end state, add `--rm`
