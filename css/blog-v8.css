@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Fira+Mono:400,700|Open+Sans:400,700);
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -84,7 +86,7 @@ a:focus {
 }
 
 .content {
-    font-family: "Fira Sans";
+    font-family: 'Open Sans', sans-serif;
     font-weight: lighter;
     padding: 2em 3em 0;
 }
@@ -97,7 +99,7 @@ a:focus {
   font-weight: normal;
 }
 .post-title {
-    font-family: "Fira Sans";
+    font-family: 'Open Sans', sans-serif;
     font-size: 2em;
     color: #222;
     margin-bottom: 0.2em;
@@ -109,13 +111,13 @@ a:focus {
     margin-left: 1em;
 }
 .post-description {
-    font-family: "Fira Sans";
+    font-family: 'Open Sans', sans-serif;
     font-weight: lighter;
     color: #444;
     line-height: 1.8em;
 }
 .post-meta {
-    font-family: "Fira Sans";
+    font-family: 'Open Sans', sans-serif;
     color: #999;
     font-size: 90%;
     margin: 0;
