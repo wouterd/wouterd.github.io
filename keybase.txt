@@ -4,68 +4,63 @@ https://keybase.io/wouterd
 
 I hereby claim:
 
-  * I am an admin of http://www.wouterdanes.net
+  * I am an admin of http://wouterdanes.net
   * I am wouterd (https://keybase.io/wouterd) on keybase.
-  * I have a public key with fingerprint 4EB3 3911 580A 2C21 1981  ED03 4569 9580 E78F 15F1
+  * I have a public key with fingerprint 4FD8 2922 A5C4 290E E866  FE98 F0A5 0EBB 7CB7 7D41
 
-To claim this, I am signing this object:
+To do so, I am signing this object:
 
 {
     "body": {
         "client": {
             "name": "keybase.io node.js client",
-            "version": "0.6.0"
+            "version": "0.8.22"
         },
         "key": {
-            "fingerprint": "4eb33911580a2c211981ed0345699580e78f15f1",
+            "eldest_kid": "01016946cca922ff14a07bd58ea948b2fbca0054293dc82d80f736b9e7e5bee539b10a",
+            "fingerprint": "4fd82922a5c4290ee866fe98f0a50ebb7cb77d41",
             "host": "keybase.io",
-            "key_id": "45699580E78F15F1",
+            "key_id": "f0a50ebb7cb77d41",
+            "kid": "01016946cca922ff14a07bd58ea948b2fbca0054293dc82d80f736b9e7e5bee539b10a",
             "uid": "ed5ee4ab536aca173371412c3e304700",
             "username": "wouterd"
         },
-        "merkle_root": {
-            "ctime": 1411042074,
-            "hash": "257129af191a85cd1a855a83c5fea941d6f664cee4380f7be87b0d7dc859859da5bce4f1752a2669c4d547bed51dd44f1152e6049270228209824df0e064ca0a",
-            "seqno": 51425
-        },
         "service": {
-            "hostname": "www.wouterdanes.net",
+            "hostname": "wouterdanes.net",
             "protocol": "http:"
         },
         "type": "web_service_binding",
         "version": 1
     },
-    "ctime": 1411042099,
+    "ctime": 1444257857,
     "expire_in": 157680000,
-    "prev": "08ebbe3407a9036a308a3a0be3001b927f396f109a526dd33cd1dbb31ad954de",
-    "seqno": 4,
+    "prev": "2a1b0ea95ffb78371c0240a067b2c5c84f76004de9b6c73c28202f1bc8e8d4b3",
+    "seqno": 9,
     "tag": "signature"
 }
 
-with the aforementioned key, yielding the PGP signature:
+which yields the signature:
 
 -----BEGIN PGP MESSAGE-----
 Version: GnuPG v1
 
-owFdkm1sFEUYx6+tpcEckcSWGOJLXWOssR4zOzM7O6fxi4AkmMZEokQil9mdZ68L
-ZffY3d551kpRGxUxaHxJIfULKsEYfKlIAvjFfsGkCSgq0gCmllJEg4khGIPROtMc
-8WWz2czO/J7/PP/neV5Z1JJrbloRvjF0fkfHr00TF7zcmqUTZMDyYlW3igOW3xdC
-lJlVJDeBVbQ2Qt2TKRTCuDOKFRQ2pJ0NptuqQpKGcaQpVHAKyBrsNrgJDsKoDEkl
-CY2WRcEjRGDMXCRt38ZYuBgUIpQ5QuhN4G6AWYC1ZG+cZv+51ZrXLIXK6DT4Fdxd
-idlKw/fPH4BiAFR6jDjSl5gTwjHFtk+AIMoRMmAKScNSLe7PIFEm3U2QbOyDUhLH
-8579LDSEjsWI2ohTnZBMe3WMzTi2hQywwNJlvjJfJl3iswCkoFg5geNQX2dBXBRw
-D1zuIcWV7zKhXyWZ5wMNMGe2tB1H+FQxqjHFsFJUH2Bmg4OosDmybddGwrWpChAg
-rSqR1A5S2BzFVpFharNB85tUQx9M2qZoV73VaoWGPxlBWojANKqSxFnsx30a6M2y
-StFYz+oVHTBm1cArNbRKXhgp3bl/txZr9H9lEaLbgicqYQKl0BCMOy7Sj7kHqmYa
-XPA8IBRxKZBuCUGuJBLpLYSwpy0GRDgBRkIy21GKEF1P5XkESyUYVfCPWd2ATJa1
-ZBqWI5n1J2ANvth04zW5pubcgtZmM7u5axcuvjrQM5Ntc2p9+eP7Bnq+enbvniXr
-ni+3Hfv2TMvqLa9vnnz/8nVZ++T6D7/c+U0u+etk/c6Z/XecvfDeDa2rl/xw6tyi
-29e23dQeXnqrtm00n3+wC8lC6wl34ZXu7J5Hph56/MRj9IuOu0/PwfBub+7zvceq
-Rw/Ovj0yvnhmwwFx6fD2r5dP3bx115V9Lbu6xm97ePo4H2pf+9tPdy3bsga9I1b9
-cYBfvLjt4JuvTvTcO75j6fGueKo++9z+WnZk8NEnc8+80HOL8/L2lqeOjCSH1k3v
-O3x+eOoTODf0LqseWvX0nuFP/3wpLZ79ZXRBx7LfXxsZO518nx/N3//A1uVjs3y6
-/NmtJy//vNP56IMfj7ZfP9OZ/+5v
-=Jj0R
+owGtkltsDFEYx3dbVAkRl0YQavSF1Dpz5sxtQxDELeIWt0S6zjnzzRqtmTE722qX
+EI07IaLq0odNCDYSBJGouhOE4MGDoiREpBLxIHEpKTObepB4dJ5Ozvl9//P//t/Z
+26cwUhC9O+DNw9zPS0ejD9pZZPGg7OSMwByjVohnBF5lge2HO5uuBiEuVEItoymI
+WU6p7RgQW5Uq7WLKhWrwUpZjBxSKaTGMhfXlIR9WQ5UBKT9RaRnhrYhERScK51TH
+2DRFQpHKDFkDqhONYZNxipBMsC4ZXMOGhkxVUpgOKsgMQJZ0JiIaPGhadhI817NC
+iwIxDQ0HglTmQSkC0BTFBF0zEZURMKZypqoGEYPClU7K/6sZIe80kbf3D/4/+07n
+5cCQAQhlsqRQTkVVklSRiJhLICGiIhSCKfC6gq9x0j54RphpcFhtcQhzDRv5G6A2
+pGI2hPNwPcd3uFMVXK70fTce1vq1bh4GluiSSTDLNoIg8wM81DVBMUC5b4XCIiEE
+y6omq+UCrHUtDxJWSMiqoqFghe9AdaCJqchQEIVsmkzVgmY4wgRRpKgMc5lrxFQV
+hIgBOlO4KnGsYYRNkXENNIMwSQg7W2M7QlwPfNJkIJmykjb10x4I67dHh3WLRAsi
+PboXhF800qu4359/u6mzqKNwwP0xfSs6OrZuO3Gtc26p99L6XLijOHNv2YXzs3YO
+rbGu32psOpo9lJ3h9q7L9n8y+1jfw18vvVhU/eXZmPleZGTz6i3Dc89+1Rn7K9O5
+lhttGy/q0z81D3aZ+6Mh+aHn+MZHTz8PappSXzeCDlzH0+/uT1uxtGVOzh1X8XXC
+kau7bhXtMXefrxj9fd+GJU3fzpglzxcOabteay149arC/ziv9fUPo6VwnTN1+ZkV
+PeML7twcO6I9OrHm5KnN53o8bGif+PpEEWk8/kUvyzSPfZHMPD77vi03s/5iPTzY
+eqOspGX8wFMFjS9bs7G3FxqWbD7d2TrpnHe77PLBkuJeV/DyUdKB7g1FvwE=
+=asE/
 -----END PGP MESSAGE-----
 
 And finally, I am proving ownership of this host by posting or
