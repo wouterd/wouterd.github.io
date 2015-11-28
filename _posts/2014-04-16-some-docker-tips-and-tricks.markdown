@@ -13,12 +13,12 @@ summary: "Docker is a great tool, which can be daunting at first. Shells can be 
 ### Removing All Containers and Images (Spring Cleaning)
 Spring cleaning one liner:
 
-    {% raw %} docker rm -f $(docker ps -a -q) ; docker rmi $(docker images -q -a) {% endraw %}
+    {% raw %} docker rm -v -f $(docker ps -a -q) ; docker rmi $(docker images -q -a) {% endraw %}
 
 This might give a warning when there are no running containers or containers at all, but it's a nice one liner when
 you're trying things out. If you just want to remove all containers, you can run:
 
-    {% raw %} docker rm -f $(docker ps -a -q) {% endraw %}
+    {% raw %} docker rm -f -v $(docker ps -a -q) {% endraw %}
 
 ### Remove Containers On Exit
 If you only want to quickly run a command in a container and exit and aren't worried about the end state, add `--rm`
