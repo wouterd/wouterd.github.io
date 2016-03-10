@@ -1,4 +1,4 @@
-@import url(//fonts.googleapis.com/css?family=Fira+Mono:400,700|Open+Sans:400,700);
+@import url(//fonts.googleapis.com/css?family=Fira+Mono:400,700|Fira+Sans:400,700);
 
 * {
     -webkit-box-sizing: border-box;
@@ -86,8 +86,7 @@ a:focus {
 }
 
 .content {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: lighter;
+    font-family: 'Fira Sans', sans-serif;
     padding: 2em 3em 0;
 }
 
@@ -99,11 +98,11 @@ a:focus {
   font-weight: normal;
 }
 .post-title {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Fira Sans', sans-serif;
     font-size: 2em;
     color: #222;
     margin-bottom: 0.2em;
-    font-weight: normal;
+    font-weight: bold;
 }
 .post-avatar {
     border-radius: 50px;
@@ -111,13 +110,13 @@ a:focus {
     margin-left: 1em;
 }
 .post-description {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: lighter;
+    font-family: 'Fira Sans', sans-serif;
     color: #444;
     line-height: 1.8em;
 }
 .post-meta {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: bold;
     color: #999;
     font-size: 90%;
     margin: 0;
