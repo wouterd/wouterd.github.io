@@ -1,6 +1,6 @@
 name: Wouter Danes blog
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 permalink: /:year/:month/:day/:title.html
 gems:
 - jekyll-redirect-from
