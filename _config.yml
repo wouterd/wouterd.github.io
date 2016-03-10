@@ -1,5 +1,4 @@
 name: Wouter Danes blog
-markdown: redcarpet
 highlighter: rouge
 permalink: /:year/:month/:day/:title.html
 gems:
